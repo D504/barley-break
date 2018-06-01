@@ -23,6 +23,7 @@ export class GameField {
     constructor(scene: THREE.Scene, camera: THREE.Camera) {
         // TODO: remove magic number
         const fieldWidth = this._fieldWidth = 4;
+        this._fieldSize = 16;
         if (fieldWidth !== Math.floor(fieldWidth)) {
             this._fieldWidth = Math.floor(this._fieldWidth);
             console.error('Wrong field size.');
@@ -38,12 +39,15 @@ export class GameField {
             const tile = new Tile(el);
             scene.add(tile);
 
-            // TODO: remove magic number
             tile.setToPlace(index);
             return tile;
         });
+
         if (!this._isSolvable()) {
             this._swap(0, 1);
+
+            this._gameField[0].setToPlace(0);
+            this._gameField[1].setToPlace(1);
         }
 
         this._camera = camera;
@@ -78,7 +82,12 @@ export class GameField {
         }
 
         if (neighbors.indexOf(this._emptyTilePlace) !== -1) {
-            this._swap(place, this._emptyTilePlace);
+            const neighbor = this._emptyTilePlace;
+            this._swap(place, neighbor);
+
+            this._gameField[place].move(place);
+            this._gameField[neighbor].move(neighbor);
+
             this._emptyTilePlace = place;
             return true;
         } else {
@@ -122,21 +131,18 @@ export class GameField {
         const buf = this._gameField[el1];
         this._gameField[el1] = this._gameField[el2];
         this._gameField[el2] = buf;
-
-        // TODO: remove magic number
-        this._gameField[el1].move(el1);
-        this._gameField[el2].move(el2);
     }
 
     private _isSolvable() {
         let disorderCount = 0;
         for (let i = 0; i < this._fieldSize - 2; i++) {
-            for (let j = i + 1; j < this._fieldSize - 1; j--) {
-                if (this._gameField[i].id > this._gameField[j].id) {
+            for (let j = i + 1; j < this._fieldSize - 1; j++) {
+                if (this._gameField[i].value > this._gameField[j].value) {
                     disorderCount++;
                 }
             }
         }
+
         return !(disorderCount % 2);
     }
 

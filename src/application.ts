@@ -3,6 +3,7 @@ import 'three/OrbitControls';
 
 import RenderLoopManager from './render_loop_manager';
 import {GameField} from './field';
+import Tile from './tile';
 
 export default class Application {
     public constructor() {
@@ -15,6 +16,7 @@ export default class Application {
         window.addEventListener('mousedown', (event) => this._onMouseDown(event));
 
         this._renderLoopManager = new RenderLoopManager();
+        Tile.renderLoopManager = this._renderLoopManager;
         this.start();
     }
 
@@ -43,14 +45,7 @@ export default class Application {
         this._renderLoopManager.run();
     }
 
-    public _onMouseMove(event: MouseEvent) {
-        // this._mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        // this._mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-
-        // const hoverTile = this._field.getPickedTile(this._mouse);
-
-        this._renderLoopManager.run();
-    }
+    public _onMouseMove(event: MouseEvent) {}
 
     public _onMouseDown(event: MouseEvent) {
         this._mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -60,8 +55,8 @@ export default class Application {
 
         if (pickedTile && !this._field.isCompleted()) {
             this._field.move(pickedTile);
+            this._renderLoopManager.run();
         }
-        this._renderLoopManager.run();
     }
 
     private _initGL() {

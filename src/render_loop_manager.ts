@@ -24,7 +24,7 @@ export default class RenderLoopManager {
         // OH MY ...
         this.loop = async function* () {
             while (!this._isDestroyed) {
-                yield await new Promise((resolve) => {
+                yield new Promise((resolve) => {
                     self._resolve = resolve;
                 });
             }

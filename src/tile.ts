@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import RenderLoopManager from './render_loop_manager';
 
 const TILE_SIZE = new THREE.Vector3(1, 0.1, 1);
 const BOARD_SIZE = new THREE.Vector3(3.3, 0, 3.3);
@@ -42,6 +43,10 @@ export default class Tile extends THREE.Object3D {
             tile._removeText();
             tile._addText();
         }
+
+        if (Tile.renderLoopManager) {
+            Tile.renderLoopManager.run();
+        }
     }
 
     private _removeText() {
@@ -84,7 +89,6 @@ export default class Tile extends THREE.Object3D {
     }
 
     public move(place: number) {
-        // TODO: remove magic numbers
         if (this.value) {
             this._isMoving = true;
         }
@@ -134,6 +138,7 @@ export default class Tile extends THREE.Object3D {
     // SRY for that. I don't have time to write it in right way
     public value: number;
     public place: number;
+    public static renderLoopManager: RenderLoopManager | null;
 
     private static _allTiles: Array<Tile>;
     private static _font: THREE.Font | null;
