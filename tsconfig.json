@@ -1,0 +1,44 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "strictNullChecks": true,
+
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "outDir": "./lib/",
+
+        "types": [
+        ],
+        "typeRoots": [
+            "node_modules/@types",
+        ],
+        "lib": [
+            "dom",
+            "es2015",
+            "esnext.asynciterable"
+        ]
+    },
+    "awesomeTypescriptLoaderOptions": {
+        "useWebpackText": true,
+        "forkChecker": true,
+        "useCache": true
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": [
+        "node_modules"
+    ],
+    "compileOnSave": true,
+    "buildOnSave": false,
+    "atom": {
+        "rewriteTsconfig": false
+    }
+}
