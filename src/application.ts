@@ -93,10 +93,10 @@ export default class Application {
         directionLight.position.set(1, 1, 1);
         scene.add(directionLight);
 
-        const helper = new THREE.GridHelper( 1200, 60, 0xFF4444, 0x404040 );
-        scene.add(helper);
-        const axis = new THREE.AxesHelper(10);
-        scene.add(axis);
+        // const helper = new THREE.GridHelper( 1200, 60, 0xFF4444, 0x404040 );
+        // scene.add(helper);
+        // const axis = new THREE.AxesHelper(10);
+        // scene.add(axis);
 
         this._field = new GameField(this._scene, this._camera);
     }
